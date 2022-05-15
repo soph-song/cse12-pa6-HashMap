@@ -22,8 +22,12 @@ public class MyHashMapTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testPut_nullKey() {
 		testMap.put(null, TEST_VAL);
+		testMap.remove(null);
+		testMap.set(null, TEST_VAL);
+		testMap.replace(null, TEST_VAL);
 	}
-
+		
+	
 	@Test
 	public void testKeys_nonEmptyMap() {
 		// You don't have to use array list 
@@ -38,6 +42,27 @@ public class MyHashMapTest {
 		// we need to sort because hash map doesn't guarantee ordering
 		Collections.sort(resultKeys);
 		assertEquals(expectedKeys, resultKeys);
+		//test remove
+		testMap.remove(TEST_KEY);
+		resultKeys = testMap.keys();
+		Collections.sort(resultKeys);
+		expectedKeys.remove(TEST_KEY);
+		assertEquals(expectedKeys,resultKeys);
+		//test set
+		testMap.set(TEST_KEY+6,TEST_VAL+6);
+		expectedKeys.add(TEST_KEY+6);
+		resultKeys = testMap.keys();
+		Collections.sort(resultKeys);
+		assertEquals(expectedKeys,resultKeys);
+		testMap.set(TEST_KEY+6,TEST_VAL+7);
+		assertEquals(TEST_VAL+7,testMap.get(TEST_KEY+6));
+		//test replace
+		testMap.put("hi","bye");
+		assertEquals(true,testMap.replace("hi", "hello"));
+		assertEquals("hello", testMap.get("hi"));
+
+
+
 	}
 	
 	/* Add more of your tests below */

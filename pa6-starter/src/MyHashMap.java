@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.lang.Math;
 
 public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	public static final double DEFAULT_LOAD_FACTOR = 0.75;
@@ -13,15 +15,18 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	private int size;
 
 	// Use this instance variable for Separate Chaining conflict resolution
-	private List<HashMapEntry<K, V>>[] buckets;  
+	public List<HashMapEntry<K, V>>[] buckets;  
 	
 	// Use this instance variable for Linear Probing
 	private HashMapEntry<K, V>[] entries; 	
 
+
 	public MyHashMap() {
 		this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
+
 	}
 	
+
 	/**
 	 * 
 	 * @param initialCapacity the initial capacity of this MyHashMap
@@ -31,10 +36,19 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	 */
 	@SuppressWarnings("unchecked")
 	public MyHashMap(int initialCapacity, double loadFactor) throws IllegalArgumentException {
-		// TODO Finish initializing instance fields
+		if (initialCapacity < 0  ) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_CAPACITY);
+		}
+		if (loadFactor <= 0) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_LOAD_FACTOR);
+		}
+
+		this.capacity = initialCapacity;
+		this.loadFactor = loadFactor;
+		this.size = 0;
 
 		// if you use Separate Chaining
-		buckets = (List<HashMapEntry<K, V>>[]) new List<?>[capacity];
+		this.buckets = (ArrayList<HashMapEntry<K, V>>[]) new ArrayList<?>[capacity];
 
 		// if you use Linear Probing
 		entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
@@ -42,58 +56,133 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public boolean put(K key, V value) throws IllegalArgumentException {
+		if (key == null) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
 		// can also use key.hashCode() assuming key is not null
 		int keyHash = Objects.hashCode(key); 
-		// TODO Auto-generated method stub
-		return false;
+		int index = Math.abs(keyHash % capacity);
+		HashMapEntry<K,V> entry = new HashMapEntry<K,V>(key, value);
+		if (buckets[index] == null) {
+		buckets[index] = new ArrayList<>();
+		}
+		buckets[index].add(entry);
+		size+=1;
+		return true;
 	}
 
 	@Override
 	public boolean replace(K key, V newValue) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if (key == null) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int keyHash = key.hashCode();
+		int index = Math.abs(keyHash % capacity);
+		for (HashMapEntry<K,V> i :buckets[index]) {
+			if (i.getKey().equals(key)) {
+				i.setValue(newValue);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean remove(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if (key == null) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int keyHash = Objects.hashCode(key);
+		int index = Math.abs(keyHash % capacity);
+		for (HashMapEntry<K,V> i :buckets[index]) {
+			if (i.getKey().equals(key)) {
+				buckets[index].remove(i);
+				return true; 
+			}
+		}
+		size-=1;
 		return false;
 	}
 
 	@Override
 	public void set(K key, V value) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		if (key == null) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int keyHash = key.hashCode();
+		int index = Math.abs(keyHash % capacity);
+		//finds for same key and update value if there is
+		if (buckets[index] != null) {
+			for (HashMapEntry<K,V> i :buckets[index]) {
+				if (i.getKey().equals(key)) {
+					i.setValue(value);
+					return;
+				}
+			}
+		}
+		//adds entry to the list
+		buckets[index] = new ArrayList<>();
+		buckets[index].add(new HashMapEntry<K,V>(key, value));
+		size+=1;
 	}
 
 	@Override
 	public V get(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if (key == null) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int keyHash = key.hashCode();
+		int index = Math.abs(keyHash % capacity);
+		//finds the key and return value
+		for (HashMapEntry<K,V> i :buckets[index]) {
+			if (i.getKey().equals(key)) {
+				return i.getValue();
+			}
+		}
+
 		return null;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if (size == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean containsKey(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if (key == null) {
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int keyHash = key.hashCode();
+		int index = Math.abs(keyHash % capacity);
+		for (HashMapEntry<K,V> i :buckets[index]) {
+			if (i.getKey().equals(key)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public List<K> keys() {
-		// TODO Auto-generated method stub
-		return null;
+		List<K> keys = new ArrayList<K>();
+		for (int i = 0; i < buckets.length; ++i) {
+			if (buckets[i] != null) {
+			for (HashMapEntry<K,V> key: buckets[i]) {
+				keys.add(key.getKey());
+			}
+			}
+		}
+	
+		return keys;
 	}
 	
 	private static class HashMapEntry<K, V> implements DefaultMap.Entry<K, V> {

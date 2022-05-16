@@ -67,34 +67,41 @@ public class FileSystem {
     		modifiedDate ="01/01/2021";
     	}
     	FileData val = new FileData(fileName,directory,modifiedDate);
-    	
-    	//Check if same directory exists
-    	if (nameMap.containsKey(fileName) || dateMap.containsKey(modifiedDate)) {
+    	//if filename already exists
+    	if (nameMap.containsKey(fileName)) {
+			//Check if same directory exists
     		for(FileData data:nameMap.get(fileName)) {
     			if (data.dir.equals(directory)) {
     				return false;
     			}
     		}
+			//update existing key:name
     		ArrayList<FileData> existingN = nameMap.get(fileName);
         	existingN.add(val);
         	dateMap.replace(fileName,existingN);
-    		
-    		for(FileData data:dateMap.get(modifiedDate)) {
-    			if (data.dir.equals(directory)) {
-    				return false;
-    			}
-    		}
-    		ArrayList<FileData> existingD = dateMap.get(modifiedDate);
-        	existingD.add(val);
-        	dateMap.replace(modifiedDate,existingD);
-        	return true;
-    	
+			
     	}
-    	//If adding for the first time
-    	ArrayList<FileData> values = new ArrayList<>();
-    	values.add(val);
-    	nameMap.put(fileName,values);
-    	dateMap.put(modifiedDate, values);
+		else {
+			//If adding name for the first time
+			ArrayList<FileData> values = new ArrayList<>();
+			values.add(val);
+			nameMap.put(fileName,values);
+		}
+
+		//if date already exists
+		if (dateMap.containsKey(modifiedDate)) {
+			ArrayList<FileData> existingD = dateMap.get(modifiedDate);
+			existingD.add(val);
+			dateMap.replace(modifiedDate,existingD);
+		}
+    	else {
+			//adding date first time
+			ArrayList<FileData> values = new ArrayList<>();
+			values.add(val);
+			dateMap.put(modifiedDate, values);
+		}
+    	
+    	
     	return true;
     }
 

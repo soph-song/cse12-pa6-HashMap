@@ -62,6 +62,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		// can also use key.hashCode() assuming key is not null
 		int keyHash = Objects.hashCode(key); 
 		int index = Math.abs(keyHash % capacity);
+		if (buckets[index].contains(key)) {
+			return false;
+		}
 		HashMapEntry<K,V> entry = new HashMapEntry<K,V>(key, value);
 		if (buckets[index] == null) {
 		buckets[index] = new ArrayList<>();
@@ -78,6 +81,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		}
 		int keyHash = key.hashCode();
 		int index = Math.abs(keyHash % capacity);
+		
 		for (HashMapEntry<K,V> i :buckets[index]) {
 			if (i.getKey().equals(key)) {
 				i.setValue(newValue);
@@ -133,6 +137,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		}
 		int keyHash = key.hashCode();
 		int index = Math.abs(keyHash % capacity);
+
 		//finds the key and return value
 		for (HashMapEntry<K,V> i :buckets[index]) {
 			if (i.getKey().equals(key)) {

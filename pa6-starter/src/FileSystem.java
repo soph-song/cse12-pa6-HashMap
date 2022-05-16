@@ -172,8 +172,12 @@ public class FileSystem {
 			for (FileData data:nameMap.get(name)) {
 				String date = data.lastModifiedDate;
 				dateMap.get(date).remove(data);
+				if (dateMap.get(date).isEmpty()){
+					dateMap.remove(date);
+				}
 			}	
 		nameMap.remove(name);
+		
     	result = true;
     	}
 		

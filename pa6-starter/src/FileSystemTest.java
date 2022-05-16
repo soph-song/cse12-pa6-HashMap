@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.*;
 
@@ -31,7 +32,7 @@ public class FileSystemTest {
         ArrayList<FileData> expected = new ArrayList<>();
         expected.add(new FileData("mySample.txt", "/home", "02/01/2021"));
         expected.add(new FileData("mySample.txt", "/root", "02/01/2021"));
-       
         assertEquals(true,FS.removeByName("mySample.txt"));
+        System.out.println(FS.findFilesByDate("02/01/2021").toString());
     }
 }

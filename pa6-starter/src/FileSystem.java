@@ -167,12 +167,13 @@ public class FileSystem {
     			}
     		}
     	}
-    	result = true;
-    	}
 		//remove entry if value is empty
 		if (nameMap.get(name).isEmpty()) {
 			nameMap.remove(name);
 		}
+    	result = true;
+    	}
+		
     	return result;
 
     }

@@ -17,8 +17,8 @@ public class FileSystem {
 
     // TODO
     public FileSystem(String inputFile) {
-    	nameMap = new MyHashMap<>();
-    	dateMap = new MyHashMap<>();
+    	this.nameMap = new MyHashMap<>();
+    	this.dateMap = new MyHashMap<>();
         try {
             File f = new File(inputFile);
             Scanner sc = new Scanner(f);
@@ -177,10 +177,8 @@ public class FileSystem {
 				}
 			}	
 		nameMap.remove(name);
-		
     	result = true;
     	}
-		
     	return result;
 
     }
@@ -191,16 +189,19 @@ public class FileSystem {
 		String date = "";
     	if (nameMap.containsKey(name)) {
     		FileData data = findFile(name, directory);
-			date = data.lastModifiedDate;
-    		nameMap.get(name).remove(data);
-    		dateMap.get(date).remove(data);
-			if (nameMap.get(name).isEmpty()) {
-				nameMap.remove(name);
+			if(data != null) {
+				date = data.lastModifiedDate;
+				nameMap.get(name).remove(data);
+				dateMap.get(date).remove(data);
+				if (nameMap.get(name).isEmpty()) {
+					nameMap.remove(name);
+				}
+				if (dateMap.get(date).isEmpty()) {
+					dateMap.remove(date);
+				}
+				result = true;
 			}
-			if (dateMap.get(date).isEmpty()) {
-				dateMap.remove(date);
-			}
-    		result = true;
+			
     	}
 		
     	return result;

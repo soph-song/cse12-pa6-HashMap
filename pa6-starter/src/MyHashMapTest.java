@@ -69,6 +69,10 @@ public class MyHashMapTest {
 		//test get/put
 		assertEquals(null,testMap.get("key"));
 		assertEquals(false,testMap.put("hi",TEST_VAL+1));
+		//test remove null value
+		testMap.put("it's null", null);
+		assertEquals(true,testMap.remove("it's null"));
+		assertEquals(false, testMap.containsKey("it's null"));
 
 
 

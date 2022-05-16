@@ -101,12 +101,12 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		int keyHash = Objects.hashCode(key);
 		int index = Math.abs(keyHash % capacity);
 		for (HashMapEntry<K,V> i :buckets[index]) {
-			if (i.getKey().equals(key) && i.getValue() != null) {
-				buckets[index].remove(i);
-				return true; 
+			if (i.getKey().equals(key)) {
+				size-=1;
+				return buckets[index].remove(i);
+				
 			}
 		}
-		size-=1;
 		return false;
 	}
 

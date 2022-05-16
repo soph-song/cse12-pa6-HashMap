@@ -194,15 +194,15 @@ public class FileSystem {
 			date = data.lastModifiedDate;
     		nameMap.get(name).remove(data);
     		dateMap.get(date).remove(data);
-					
+			if (nameMap.get(name).isEmpty()) {
+				nameMap.remove(name);
+			}
+			if (dateMap.get(date).isEmpty()) {
+				dateMap.remove(date);
+			}
     		result = true;
     	}
-		if (nameMap.get(name).isEmpty()) {
-			nameMap.remove(name);
-		}
-		if (dateMap.get(date).isEmpty()) {
-			dateMap.remove(date);
-		}
+		
     	return result;
     }
 

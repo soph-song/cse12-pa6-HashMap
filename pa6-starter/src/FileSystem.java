@@ -161,14 +161,9 @@ public class FileSystem {
     	if (nameMap.containsKey(name)) {
 			for (FileData data:nameMap.get(name)) {
 				String date = data.lastModifiedDate;
-				for (FileData d:dateMap.get(date)) {
-					if (d.name.equals(name)) {
-						dateMap.get(date).remove(d);
-					}
-				}
+				dateMap.get(date).remove(data);
 			}	
 		nameMap.remove(name);
-		//remove entry if value is empty
     	result = true;
     	}
 		

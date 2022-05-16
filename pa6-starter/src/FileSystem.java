@@ -11,8 +11,8 @@ public class FileSystem {
 
     // TODO
     public FileSystem() {
-    	nameMap = new MyHashMap<>();
-    	dateMap = new MyHashMap<>();
+    	this.nameMap = new MyHashMap<>();
+    	this.dateMap = new MyHashMap<>();
     }
 
     // TODO
@@ -165,7 +165,11 @@ public class FileSystem {
     			}
     		}
     	}
-    	return nameMap.remove(name);
+		//remove entry if value is empty
+		if (nameMap.get(name).isEmpty()) {
+			nameMap.remove(name);
+		}
+    	return true;
     	}
     	return false;
 

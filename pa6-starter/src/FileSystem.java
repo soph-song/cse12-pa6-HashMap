@@ -156,6 +156,7 @@ public class FileSystem {
 
     // TODO
     public boolean removeByName(String name) {
+		boolean result = false;
     	if (nameMap.containsKey(name)) {
     	for (FileData data:nameMap.get(name)) {
     		String date = data.lastModifiedDate;
@@ -165,13 +166,13 @@ public class FileSystem {
     			}
     		}
     	}
+    	result = true;
+    	}
 		//remove entry if value is empty
 		if (nameMap.get(name).isEmpty()) {
 			nameMap.remove(name);
 		}
-    	return true;
-    	}
-    	return false;
+    	return result;
 
     }
 

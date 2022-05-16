@@ -68,9 +68,11 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		}
 		if (!buckets[index].contains(key)) {
 			buckets[index].add(entry);
+			size+=1;
+			return true;
 		}
-		size+=1;
-		return true;
+		
+		return false;
 	}
 
 	@Override

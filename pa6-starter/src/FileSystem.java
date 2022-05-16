@@ -168,16 +168,19 @@ public class FileSystem {
     // TODO
     public boolean removeByName(String name) {
 		boolean result = false;
-    	if (nameMap.containsKey(name)) {
+    	if (nameMap.containsKey(name) && name != null) {
+			//first remove data from dateMap
 			for (FileData data:nameMap.get(name)) {
 				String date = data.lastModifiedDate;
 				dateMap.get(date).remove(data);
+				//after removing data, if dateMap empty, then delete entry
 				if (dateMap.get(date).isEmpty()){
 					dateMap.remove(date);
 				}
-			}	
-		nameMap.remove(name);
-    	result = true;
+			}
+			//now remove the entry in nameMap	
+			nameMap.remove(name);
+			result = true;
     	}
     	return result;
 

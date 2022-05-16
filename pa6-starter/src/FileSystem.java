@@ -188,24 +188,21 @@ public class FileSystem {
     // TODO
     public boolean removeFile(String name, String directory) {
     	boolean result = false;
+		String date = "";
     	if (nameMap.containsKey(name)) {
-    		for (FileData data:nameMap.get(name)) {
-    			String date = data.lastModifiedDate;
-    			String dir = data.dir;
-    			if(dir.equals(directory)) {
-    				nameMap.get(name).remove(data);
-    				dateMap.get(date).remove(data);
-					//Check if entry is empty and remove
-					if (nameMap.get(name).isEmpty()) {
-						nameMap.remove(name);
-					}
-					if (dateMap.get(date).isEmpty()) {
-						dateMap.remove(date);
-					}
-    				result = true;
-    			}
-    		}
+    		FileData data = findFile(name, directory);
+			date = data.lastModifiedDate;
+    		nameMap.get(name).remove(data);
+    		dateMap.get(date).remove(data);
+					
+    		result = true;
     	}
+		if (nameMap.get(name).isEmpty()) {
+			nameMap.remove(name);
+		}
+		if (dateMap.get(date).isEmpty()) {
+			dateMap.remove(date);
+		}
     	return result;
     }
 

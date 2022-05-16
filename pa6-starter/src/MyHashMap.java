@@ -62,14 +62,13 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		// can also use key.hashCode() assuming key is not null
 		int keyHash = Objects.hashCode(key); 
 		int index = Math.abs(keyHash % capacity);
-		if (buckets[index].contains(key)) {
-			return false;
-		}
 		HashMapEntry<K,V> entry = new HashMapEntry<K,V>(key, value);
 		if (buckets[index] == null) {
 		buckets[index] = new ArrayList<>();
 		}
-		buckets[index].add(entry);
+		if (!buckets[index].contains(key)) {
+			buckets[index].add(entry);
+		}
 		size+=1;
 		return true;
 	}

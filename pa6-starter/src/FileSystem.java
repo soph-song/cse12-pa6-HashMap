@@ -144,7 +144,8 @@ public class FileSystem {
     	while (n<dateMap.get(modifiedDate).size()) {
     	FileData first = dateMap.get(modifiedDate).get(n);
     	for(FileData data:dateMap.get(modifiedDate)) {
-    		if (!data.dir.equals(first.dir) && data.name.equals(first.name)) {
+    		if (!data.dir.equals(first.dir) && data.name.equals(first.name)
+			&& !list.contains(data)) {
     			list.add(data);
     		}
     	}

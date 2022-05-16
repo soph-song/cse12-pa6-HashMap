@@ -17,6 +17,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	// Use this instance variable for Separate Chaining conflict resolution
 	public List<HashMapEntry<K, V>>[] buckets;  
 	
+	
 	// Use this instance variable for Linear Probing
 	private HashMapEntry<K, V>[] entries; 	
 
@@ -49,6 +50,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 		// if you use Separate Chaining
 		this.buckets = (ArrayList<HashMapEntry<K, V>>[]) new ArrayList<?>[capacity];
+		for (int i = 0; i < capacity; ++i) {
+			buckets[i] = new ArrayList<>();
+		}
 
 		// if you use Linear Probing
 		entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
@@ -63,9 +67,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		int keyHash = Objects.hashCode(key); 
 		int index = Math.abs(keyHash % capacity);
 		HashMapEntry<K,V> entry = new HashMapEntry<K,V>(key, value);
-		if (buckets[index] == null) {
-		buckets[index] = new ArrayList<>();
-		}
 		if (!buckets[index].contains(key)) {
 			buckets[index].add(entry);
 			size+=1;

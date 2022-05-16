@@ -29,7 +29,11 @@ public class MyHashMapTest {
 		
 	}
 		
-	
+	@Test
+	public void testKeys_EmptyMap() {
+		assertEquals(null,testMap.get("ok"));
+	}
+
 	@Test
 	public void testKeys_nonEmptyMap() {
 		// You don't have to use array list 

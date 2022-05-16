@@ -32,7 +32,7 @@ public class FileSystemTest {
         ArrayList<FileData> expected = new ArrayList<>();
         expected.add(new FileData("mySample.txt", "/home", "02/01/2021"));
         expected.add(new FileData("mySample.txt", "/root", "02/01/2021"));
-        assertEquals(true,FS.removeByName("hi.txt"));
+        assertEquals(false,FS.removeByName(null));
         System.out.println(FS.findAllFilesName().toString());
     }
 }

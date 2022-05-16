@@ -190,11 +190,14 @@ public class FileSystem {
     			String dir = data.dir;
     			if(dir.equals(directory)) {
     				nameMap.get(name).remove(data);
-    				for (FileData d:dateMap.get(date)) {
-    	    			if (d.name.equals(name) && d.dir.equals(directory)) {
-    	    				dateMap.get(date).remove(d);
-    	    			}
-    	    		}
+    				dateMap.get(date).remove(data);
+					//Check if entry is empty and remove
+					if (nameMap.get(name).isEmpty()) {
+						nameMap.remove(name);
+					}
+					if (dateMap.get(date).isEmpty()) {
+						dateMap.remove(date);
+					}
     				result = true;
     			}
     		}

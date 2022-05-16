@@ -127,30 +127,40 @@ public class FileSystem {
 
     // TODO
     public ArrayList<FileData> findFilesByName(String name) {
-    	return nameMap.get(name);
-
+		if (nameMap.containsKey(name)){
+			return nameMap.get(name);
+		}
+		else {
+			return new ArrayList<>();
+		}
     }
 
     // TODO
     public ArrayList<FileData> findFilesByDate(String modifiedDate) {
-    	return dateMap.get(modifiedDate);
-
+		if (dateMap.containsKey(modifiedDate)) {
+			return dateMap.get(modifiedDate);
+		}
+		else {
+			return new ArrayList<>();
+		}
     }
 
     // TODO
     public ArrayList<FileData> findFilesInMultDir(String modifiedDate) {
     	ArrayList<FileData> list = new ArrayList<>();
     	int n =0;
-    	while (n<dateMap.get(modifiedDate).size()) {
-    	FileData first = dateMap.get(modifiedDate).get(n);
-    	for(FileData data:dateMap.get(modifiedDate)) {
-    		if (!data.dir.equals(first.dir) && data.name.equals(first.name)
-			&& !list.contains(data)) {
-    			list.add(data);
-    		}
-    	}
-    	++n;
-    	}
+		if (dateMap.containsKey(modifiedDate)) {
+			while (n<dateMap.get(modifiedDate).size()) {
+			FileData first = dateMap.get(modifiedDate).get(n);
+				for(FileData data:dateMap.get(modifiedDate)) {
+					if (!data.dir.equals(first.dir) && data.name.equals(first.name)
+					&& !list.contains(data)) {
+						list.add(data);
+					}
+				}
+			++n;
+			}
+	}
     	return list;
 
     }

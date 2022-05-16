@@ -68,6 +68,7 @@ public class MyHashMapTest {
 		assertEquals("hello", testMap.get("hi"));
 		//test get/put
 		assertEquals(null,testMap.get("key"));
+		assertEquals(false,testMap.put("hi",TEST_VAL+1));
 
 
 

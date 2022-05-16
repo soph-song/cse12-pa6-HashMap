@@ -67,7 +67,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		int keyHash = Objects.hashCode(key); 
 		int index = Math.abs(keyHash % capacity);
 		HashMapEntry<K,V> entry = new HashMapEntry<K,V>(key, value);
-		if (!buckets[index].contains(key)) {
+		if (containsKey(key)==false) {
 			buckets[index].add(entry);
 			size+=1;
 			return true;

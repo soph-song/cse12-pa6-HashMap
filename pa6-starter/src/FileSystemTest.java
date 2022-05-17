@@ -28,7 +28,7 @@ public class FileSystemTest {
         assertEquals("hi.txt",data.name);
         assertEquals("/home",data.dir);
         assertEquals("02/03/2022",data.lastModifiedDate);
-        assertEquals(true, FS.removeByName(name))
+        assertEquals(true, FS.removeByName("hi.txt"));
         ArrayList<FileData> list = FS.findFilesInMultDir("02/03/2022");
         System.out.println();
          

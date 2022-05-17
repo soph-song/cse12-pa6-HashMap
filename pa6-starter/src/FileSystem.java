@@ -171,7 +171,7 @@ public class FileSystem {
 
     // TODO
     public boolean removeByName(String name) {
-		boolean result = true;
+		boolean result = false;
     	if (name != null && nameMap.containsKey(name)) {
 			//first remove data from dateMap
 			for (FileData data:nameMap.get(name)) {

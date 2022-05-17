@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class FileSystem {
 
@@ -148,19 +150,21 @@ public class FileSystem {
     // TODO
     public ArrayList<FileData> findFilesInMultDir(String modifiedDate) {
     	ArrayList<FileData> list = new ArrayList<>();
-    	int n =0;
-		if (dateMap.containsKey(modifiedDate)) {
-			while (n<dateMap.get(modifiedDate).size()) {
-			FileData first = dateMap.get(modifiedDate).get(n);
-				for(FileData data:dateMap.get(modifiedDate)) {
-					if (!data.dir.equals(first.dir) && data.name.equals(first.name)
-					&& !list.contains(data)) {
-						list.add(data);
+		ArrayList<FileData> sameDate = findFilesByDate(modifiedDate);
+		//create set of file names
+		Set<String> SetNames = new HashSet<>();
+		for (FileData data:sameDate) {
+			if (SetNames.add(data.name) == false) {
+				String duplicated = data.name;
+				for (FileData d:sameDate) {
+					if (d.name.equals(duplicated)) {
+						list.add(d);
 					}
 				}
-			++n;
 			}
-	}
+		}
+
+	
     	return list;
 
     }

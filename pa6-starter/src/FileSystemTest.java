@@ -23,16 +23,17 @@ public class FileSystemTest {
     public void testFS_find(){
         FileSystem FS = new FileSystem("/Users/sophisong/Documents/GitHub/cse12-pa6-HashMap/pa6-starter/src/input.txt");
         FS.add("hi.txt", "/home", "02/03/2022");
-        FS.add("hi.txt","/documents","01/03/2022");
+        FS.add("hi.txt","/documents","02/03/2022");
         FileData data = FS.findFile("hi.txt", "/home");
         assertEquals("hi.txt",data.name);
         assertEquals("/home",data.dir);
         assertEquals("02/03/2022",data.lastModifiedDate);
-
-        ArrayList<FileData> expected = new ArrayList<>();
-        expected.add(new FileData("mySample.txt", "/home", "02/01/2021"));
-        expected.add(new FileData("mySample.txt", "/root", "02/01/2021"));
-        assertEquals(false,FS.removeByName(null));
-        System.out.println(FS.findAllFilesName().toString());
+        ArrayList<FileData> list = FS.findFilesInMultDir("02/03/2022");
+        System.out.println();
+         
+        for (FileData daa : list) {
+            System.out.println(daa.name);
+        }
+        
     }
 }

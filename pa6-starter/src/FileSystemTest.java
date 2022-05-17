@@ -28,12 +28,11 @@ public class FileSystemTest {
         assertEquals("hi.txt",data.name);
         assertEquals("/home",data.dir);
         assertEquals("02/03/2022",data.lastModifiedDate);
+        assertEquals(true, FS.removeByName(name))
         ArrayList<FileData> list = FS.findFilesInMultDir("02/03/2022");
         System.out.println();
          
-        for (FileData daa : list) {
-            System.out.println(daa.name);
-        }
+        
         
     }
 }

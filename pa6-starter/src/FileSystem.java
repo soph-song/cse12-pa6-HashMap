@@ -31,7 +31,7 @@ public class FileSystem {
                 if (nameMap.containsKey(data[0])==false) {
                 	ArrayList<FileData> values = new ArrayList<>();
                 	values.add(value);
-                	nameMap.put(data[0],values);
+                	nameMap.add(data[0],values);
                 }
                 else if (nameMap.containsKey(data[0])==true){
                 	ArrayList<FileData> existing = nameMap.get(data[0]);
@@ -171,7 +171,7 @@ public class FileSystem {
 
     // TODO
     public boolean removeByName(String name) {
-		boolean result = false;
+		boolean result = true;
     	if (name != null && nameMap.containsKey(name)) {
 			//first remove data from dateMap
 			for (FileData data:nameMap.get(name)) {

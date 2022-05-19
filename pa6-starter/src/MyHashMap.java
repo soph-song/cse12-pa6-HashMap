@@ -16,10 +16,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	// Use this instance variable for Separate Chaining conflict resolution
 	public List<HashMapEntry<K, V>>[] buckets;  
-	
-	
-	// Use this instance variable for Linear Probing
-	private HashMapEntry<K, V>[] entries; 	
 
 
 	public MyHashMap() {
@@ -54,8 +50,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 			buckets[i] = new ArrayList<>();
 		}
 
-		// if you use Linear Probing
-		entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
+
 	}
 
 	@Override

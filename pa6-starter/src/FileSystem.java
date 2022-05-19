@@ -26,28 +26,7 @@ public class FileSystem {
             Scanner sc = new Scanner(f);
             while (sc.hasNextLine()) {
                 String[] data = sc.nextLine().split(", ");
-                FileData value = new FileData(data[0],data[1],data[2]);
-                
-                if (nameMap.containsKey(data[0])==false) {
-                	ArrayList<FileData> values = new ArrayList<>();
-                	values.add(value);
-                	nameMap.add(data[0],values);
-                }
-                else if (nameMap.containsKey(data[0])==true){
-                	ArrayList<FileData> existing = nameMap.get(data[0]);
-                	existing.add(value);
-                	nameMap.replace(data[0], existing);
-                }
-                if (dateMap.containsKey(data[2])==false) {
-                	ArrayList<FileData> values = new ArrayList<>();
-                	values.add(value);
-                	dateMap.put(data[2],values);
-                }
-                else if (dateMap.containsKey(data[2])==true) {
-                	ArrayList<FileData> existing = dateMap.get(data[2]);
-                	existing.add(value);
-                	dateMap.replace(data[2],existing);
-                }
+				add(data[0],data[1],data[2]);
                 
             }
             sc.close();
@@ -137,7 +116,7 @@ public class FileSystem {
 		}
     }
 
-    // TODO
+
     public ArrayList<FileData> findFilesByDate(String modifiedDate) {
 		if (dateMap.containsKey(modifiedDate)) {
 			return dateMap.get(modifiedDate);
@@ -147,7 +126,7 @@ public class FileSystem {
 		}
     }
 
-    // TODO
+
     public ArrayList<FileData> findFilesInMultDir(String modifiedDate) {
     	ArrayList<FileData> list = new ArrayList<>();
 		ArrayList<FileData> sameDate = findFilesByDate(modifiedDate);
@@ -169,7 +148,7 @@ public class FileSystem {
 
     }
 
-    // TODO
+
     public boolean removeByName(String name) {
 		boolean result = false;
     	if (name != null && nameMap.containsKey(name)) {
